@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <style>
+        nav{
+            width: 20%;
+            height: 500px;
+            /*overflow: hidden;*/
+        }
+    </style>
+    <title>侧导航</title>
+</head>
+<body>
+    <div id="vue">
+        <mynav one="one" two="two"></mynav>
+    </div>
+</body>
+    <script>
+        Vue.component("mynav",{
+            template: `<div class="nav">
+                        <ul class='navs' v-for="item in data">
+                             <li class="one" @click="show(item)">{{item.title}}
+                                <ul  class="two" v-show="item.state" v-for="items in item.son">
+                                    <li>{{items.title}}</li>
+                                </ul>
+                             </li>
+                        </ul>
+                    </div>`,
+            data:function(){
+                return{
+                    data:[{title:'IT',state:true,son:[{title:'javascript'},{title:'node.js'},{title:'php'}]},{title:'读书',state:true,son:[{title:'文学'},{title:'历史'},{title:'小说'}]}],
+                    state:"true"
+                }
+            },
+            methods:{
+                show(item){
+                    if(item.state){
+                        item.state = false;
+                    }else{
+                        item.state = true;
+                    }
+                }
+            }
+        })
+        new Vue({
+            el:"#vue",
+        })
+    </script>
+</html>
